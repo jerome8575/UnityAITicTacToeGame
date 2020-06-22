@@ -11,6 +11,10 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel;
     public Text gameOverText;
     public GameObject restartButton;
+    public GameObject introPanel;
+    public GameObject AIplayButton;
+    public GameObject twoPlayerButton;
+    public bool isTwoPlayerGameMode;
 
     private string playerSide;
     private int moveCount;
@@ -22,6 +26,12 @@ public class GameController : MonoBehaviour
         public int row;
         public int col;
     }
+    public void RemoveIntro(bool isTwoPlayer)
+    {
+        introPanel.SetActive(false);
+        isTwoPlayerGameMode = isTwoPlayer;
+    }
+
     public void restartGame()
     {
         playerSide = "X";

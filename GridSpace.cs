@@ -17,13 +17,22 @@ public class GridSpace : MonoBehaviour
     }
     public void SetSpace()
     {
-        buttonText.text = "X";
-        button.interactable = false;
-        gameController.setMyArray();
-        gameController.EndTurn();
-        if (gameController.getPlayerSide() == "O")
+        if (gameController.isTwoPlayerGameMode)
         {
-            gameController.makeAIPlay();
+            buttonText.text = gameController.getPlayerSide();
+            gameController.EndTurn();
         }
+        else
+        {
+            buttonText.text = "X";
+            gameController.setMyArray();
+            gameController.EndTurn();
+            if (gameController.getPlayerSide() == "O")
+            {
+                gameController.makeAIPlay();
+            }
+        }
+        button.interactable = false;
     }
+   
 }
