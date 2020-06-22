@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public Text[] buttonList;
     public GameObject gameOverPanel;
     public Text gameOverText;
+    public GameObject restartButton;
 
     private string playerSide;
     private int moveCount;
@@ -21,10 +22,20 @@ public class GameController : MonoBehaviour
         public int row;
         public int col;
     }
-
+    public void restartGame()
+    {
+        playerSide = "X";
+        gameOverPanel.SetActive(false);
+        moveCount = 0;
+        setBoardToInteractable(true);
+        for (int i = 0; i < buttonList.Length; i++)
+        {
+            buttonList[i].text = "";
+        }
+        restartButton.SetActive(false);
+    }
     public void setMyArray()
     {
-        // check which button was pressed and make that play on our array board
         int index = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -49,7 +60,6 @@ public class GameController : MonoBehaviour
     }
     public void EndTurn()
     {
-        // checkWin
         moveCount++;
         if (buttonList[0].text == playerSide && buttonList[1].text == playerSide && buttonList[2].text == playerSide)
         {
@@ -234,13 +244,11 @@ public class GameController : MonoBehaviour
         playerSide = "X";
         gameOverPanel.SetActive(false);
         moveCount = 0;
+        restartButton.SetActive(false);
     }
     void GameOver()
     {
-        for (int i = 0; i < buttonList.Length; i++)
-        {
-            buttonList[i].GetComponentInParent<Button>().interactable = false;
-        }
+        setBoardToInteractable(false);
         gameOverPanel.SetActive(true);
         if (isTie)
         {
@@ -250,9 +258,17 @@ public class GameController : MonoBehaviour
         {
             gameOverText.text = playerSide + " Wins!";
         }
+        restartButton.SetActive(true);
     }
     void changeSides()
     {
         playerSide = (playerSide == "X") ? "O" : "X";
+    }
+    void setBoardToInteractable(bool toggle)
+    {
+        for (int i = 0; i < buttonList.Length; i++)
+        {
+            buttonList[i].GetComponentInParent<Button>().interactable = toggle;
+        }
     }
 }
